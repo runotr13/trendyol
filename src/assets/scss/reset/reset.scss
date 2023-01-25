@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Source Sans Pro", sans-serif;
+}
+.app {
+    width: 90%;
+    margin: 0 auto;
+    // margin-top: 10%;
+}
+.app1{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 5%;
+}
+h1 , p{
+    margin: 0;
+    padding: 0;
+}
+
+::placeholder {
+    padding-left: 2%;
+}
+@media screen and (max-width: 768px) {
+    .app1{
+    margin-top: 35%;
+    margin-bottom: 35%;
+    }
+}
+    

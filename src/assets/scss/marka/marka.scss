@@ -1,0 +1,104 @@
+
+.filter-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    :nth-child(2){
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+    }
+}
+
+.marka-wrapper-one {
+    width: 98%;
+    margin: 0 auto;
+    border: none;
+    padding-top: 2%;
+    input {
+        background-color: #f3f3f3;
+        border-radius: 4px;
+        width: 94%;
+        height: 35px;
+        border: none;
+        outline: none;
+        padding-left: 20px;
+        &:focus {
+            box-shadow: 1px 1px 2px 2px #f3f3f3 !important;
+            border: 2px solid $base-color;
+            transition: all ease 0.3s;
+        }
+    }
+    .marka-wrapper-one-div {
+        position: relative;
+        .search-marka {
+            position: absolute;
+            top: 28%;
+            left: 1%;
+            font-weight: bold;
+            color: gray;
+        }
+    }
+}
+.marka-wrapper-two , .marka-wrapper-four {
+  width: 98%;
+  margin: 0 auto;
+  padding: 2% 0;
+  div {
+    background-color: #f3f3f3;
+    border-radius: 4px;
+    height: 40px;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    padding-left: 2%;
+    padding-left: 2%;
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+.marka-wrapper-three {
+    width: 90%;
+    margin: 0 auto;
+    div {
+        display: flex;
+        flex-wrap: wrap;
+        div
+         {
+            padding : 5px 10px;
+            > p {
+                border-radius:10px;
+                background-color:#fff;
+                text-align: center;
+                padding: 5px 10px;
+                border: 1px solid #e5e5e5;
+                color: #999;
+                font-size: 12px;
+                line-height: 15px;
+                
+            }
+        }
+    }
+}
+.marka-map {
+    border-bottom: 1px solid #e5e5e5;
+    padding: 3% 0;
+    div {
+        width: 95%;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        input {
+            width: 17px;
+            height: 17px;
+            color: gray;
+        }
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            padding-left: 2%;
+        }
+    }
+}

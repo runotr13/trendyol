@@ -1,0 +1,120 @@
+
+.filter-wrapper-first {
+    box-shadow: 0px 10px 10px #fff;
+    border-bottom: 1px solid #e5e5e5;
+}
+.filter-wrapper {
+    padding-top: 2%;
+    padding-bottom: 1%;
+    width: 98%;
+    margin: 0 auto;
+}
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    :nth-child(1) {
+        color: gray !important;
+    }
+    :nth-child(2) {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+    }
+    :nth-child(3) {
+        color: $base-color;
+        font-weight: 600;
+        font-size: 13px;
+    }
+}
+.star-wrapper-item {
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 3%;
+}
+.star-wrapper {
+    width: 94%;
+    margin: 0 auto;
+    padding-top: 3%;
+    display: flex;
+
+    :nth-child(1) {
+        width: 20px;
+        height: 20px;
+        background-color: blue;
+        border-radius: 100%;
+        color: #fff;
+        display: flex;
+        align-items: center;
+    }
+    :nth-child(2) {
+        padding-left: 2%;
+        font-size: 14px;
+        font-weight: 600;
+    }
+}
+.star-items {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 2%;
+    button {
+        border: 1px solid #e5e5e5;
+        color: #999;
+        font-size: 12px;
+        line-height: 15px;
+        padding: 1.5% 2%;
+        border-radius: 10%;
+        background-color: #fff;
+    }
+}
+.data-wrapper {
+    display: flex;
+    flex-direction: column;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+.data-item {
+    border-bottom: 1px solid #e5e5e5;
+    padding: 3% 0;
+}
+.data-item-child {
+    width: 94%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+.data-item-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+.amount {
+    padding-left: 3%;
+    color: $base-color;
+    font-size: 14px;
+    font-weight: 600;
+}
+.wrapper-item-name {
+    display: flex;
+    align-items: center;
+}
+.data-item-name {
+    color: #999;
+    font-size: 12px;
+    line-height: 15px;
+}
+.button-wrappers {
+    width: 94%;
+    margin: 0 auto;
+    padding-top: 5%;
+    button {
+        width: 100%;
+        padding: 3% 0;
+        background-color: $base-color;
+        border: 1px solid $base-color;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        border-radius: 5px;
+    }
+}
