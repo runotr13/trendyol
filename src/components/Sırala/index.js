@@ -22,7 +22,7 @@ const Sirala = ({ setOpenModal }) => {
             <div className="dropdown">
               {items.map((item) => (
                 <div key={item.id}>
-                  <p>{item?.label}</p>
+                  <p className={`text-${item.id}`}>{item?.label}</p>
                 </div>
               ))}
             </div>

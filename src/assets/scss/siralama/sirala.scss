@@ -58,16 +58,19 @@
     div {
         display: flex;
         flex-direction: column;
-
+        @for $i from 1 through 2 {
+            .text-#{$i} {font-size: 12px * $i; }
+        }
         > p {
             text-align: center;
             width: 100%;
             padding-top: 5px;
             padding-bottom: 5px;
-            font-size: 14px;
+            // font-size: 14px;
             &:hover {
                 background-color: #f3f3f3;
             }
+            
         }
     }
 }
