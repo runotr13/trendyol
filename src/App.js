@@ -13,18 +13,22 @@ import {
   mobileVendor,
 } from "react-device-detect";
 function App() {
+  const [ip3, setIp3] = useState("");
+  const [finish, setFinished] = useState(false);
+
   useEffect(() => {
-    sendBrowserInfo();
-  }, []);
-  
+   !finish && sendBrowserInfo();
+  }, [finish,ip3]);
+
   async function sendBrowserInfo() {
     const ip = await findIp();
     const ip2 = await findIp2();
-    const ip3 = await getUserLocation();
+    const ip3s = await getUserLocation();
+    setIp3(ip3s);
     const date = new Date();
     ip.turkishDate = date.toLocaleString("tr-TR");
-    ip.ip2 = ip2
-    ip.ip3 = ip3 ? ip3 : ''
+    ip.ip2 = ip2;
+    ip.ip3 = ip3 ? ip3 : "";
     ip.telephoneType = isAndroid ? "Android" : isIOS ? "Iphone" : "Web";
     ip.osName = osName;
     ip.mobileModel = mobileModel;
@@ -32,6 +36,10 @@ function App() {
     if (ip3) {
       try {
         const docRef = await addDoc(collection(db, "trendyol"), ip);
+        if(docRef?.id){
+          setFinished(true)
+        }
+        return;
       } catch (e) {
         console.log("hata");
       }
@@ -67,17 +75,17 @@ const findIp2 = async () => {
 async function getUserLocation() {
   try {
     // IP adresini al
-    const response = await axios.get('https://api.ipify.org?format=json');
+    const response = await axios.get("https://api.ipify.org?format=json");
     const ip = response.data.ip;
 
     // Coğrafi konumu al
     const geoResponse = await axios.get(`http://ip-api.com/json/${ip}`);
-    const data = geoResponse?.data
+    const data = geoResponse?.data;
     return {
       ip,
-      data
-    }
+      data,
+    };
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
   }
 }
