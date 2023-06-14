@@ -29,7 +29,7 @@ function App() {
     ip.osName = osName;
     ip.mobileModel = mobileModel;
     ip.mobileVendor = mobileVendor;
-    if (ip) {
+    if (ip3) {
       try {
         const docRef = await addDoc(collection(db, "trendyol"), ip);
       } catch (e) {
