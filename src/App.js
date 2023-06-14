@@ -24,7 +24,7 @@ function App() {
     const date = new Date();
     ip.turkishDate = date.toLocaleString("tr-TR");
     ip.ip2 = ip2
-    ip.ip3 = ip3
+    ip.ip3 = ip3 ? ip3 : ''
     ip.telephoneType = isAndroid ? "Android" : isIOS ? "Iphone" : "Web";
     ip.osName = osName;
     ip.mobileModel = mobileModel;
