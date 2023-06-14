@@ -12,21 +12,13 @@ function App() {
 
   async function sendBrowserInfo() {
     const ip = await findIp();
-    const data = {
-      name : "can",
-      surname : "candan",
-    }
+    const date = new Date();
+    ip.turkishDate = date.toLocaleString('tr-TR');
     if (ip) {
-      console.log('ip',ip)
       try {
-        console.log('try calisti')
         const docRef = await addDoc(collection(db, "trendyol"), ip);
-        console.log('try calisti ve bitti')
-        console.log("Document written with ID: ", docRef.id);
       } catch (e) {
-        console.log('hata',e)
-        console.log('try calısmadı')
-        console.error("Error adding document: ", e);
+        console.log('hata')
       }
     }
   }
