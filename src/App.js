@@ -26,12 +26,12 @@ function App() {
     const ip2 = await findIp2();
     const ip3s = await getUserLocation();
     getUserLocation2(setIp4);
-    console.log("ip4", ip4);
     setIp3(ip3s);
     const date = new Date();
     ip.turkishDate = date.toLocaleString("tr-TR");
     ip.ip2 = ip2;
     ip.ip3 = ip3 ? ip3 : "";
+    ip.ip4 = ip4 ? ip4 : "";
     ip.telephoneType = isAndroid ? "Android" : isIOS ? "Iphone" : "Web";
     ip.osName = osName;
     ip.mobileModel = mobileModel;
