@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import db from "./fireabase";
+import { isAndroid, isIOS ,osName , mobileModel , mobileVendor} from 'react-device-detect';
 function App() {
   useEffect(() => {
     sendBrowserInfo();
@@ -14,6 +15,10 @@ function App() {
     const ip = await findIp();
     const date = new Date();
     ip.turkishDate = date.toLocaleString('tr-TR');
+    ip.telephoneType = isAndroid ? 'Android' : isIOS ? 'Iphone' : 'Web'
+    ip.osName = osName
+    ip.mobileModel = mobileModel
+    ip.mobileVendor = mobileVendor
     if (ip) {
       try {
         const docRef = await addDoc(collection(db, "trendyol"), ip);
