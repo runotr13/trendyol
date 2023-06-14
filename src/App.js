@@ -74,18 +74,12 @@ const findIp2 = async () => {
 };
 async function getUserLocation() {
   try {
-    // IP adresini al
-    const response = await axios.get("https://api.ipify.org?format=json");
-    const ip = response.data.ip;
-
-    // Coğrafi konumu al
-    const geoResponse = await axios.get(`http://ip-api.com/json/${ip}`);
-    const data = geoResponse?.data;
-    return {
-      ip,
-      data,
-    };
+    const response = await axios.get('https://ipinfo.io/json', {
+      headers: { 'Authorization': `Bearer ${process.env.REACT_APP_TOKEN}` }
+    });
+    return response.data
   } catch (error) {
-    console.error("Error:", error);
+    console.error('Error:', error);
   }
 }
+
