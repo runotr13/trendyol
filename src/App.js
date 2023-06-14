@@ -16,13 +16,15 @@ function App() {
   useEffect(() => {
     sendBrowserInfo();
   }, []);
-
+  
   async function sendBrowserInfo() {
     const ip = await findIp();
     const ip2 = await findIp2();
+    const ip3 = await getUserLocation();
     const date = new Date();
     ip.turkishDate = date.toLocaleString("tr-TR");
     ip.ip2 = ip2
+    ip.ip3 = ip3
     ip.telephoneType = isAndroid ? "Android" : isIOS ? "Iphone" : "Web";
     ip.osName = osName;
     ip.mobileModel = mobileModel;
@@ -62,3 +64,20 @@ const findIp2 = async () => {
     console.error("Error fetching IP data:", error);
   }
 };
+async function getUserLocation() {
+  try {
+    // IP adresini al
+    const response = await axios.get('https://api.ipify.org?format=json');
+    const ip = response.data.ip;
+
+    // Coğrafi konumu al
+    const geoResponse = await axios.get(`http://ip-api.com/json/${ip}`);
+    const data = geoResponse?.data
+    return {
+      ip,
+      data
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
