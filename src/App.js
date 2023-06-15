@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import db from "./fireabase";
+
 import {
   isAndroid,
   isIOS,
@@ -17,24 +18,36 @@ function App() {
   const [ip3, setIp3] = useState("");
   const [ip4, setIp4] = useState("");
   const [finish, setFinished] = useState(false);
-  const { coords, isGeolocationAvailable, isGeolocationEnabled } =
-    useGeolocated({
-      positionOptions: {
-        enableHighAccuracy: false,
-      },
-      userDecisionTimeout: 5000,
-    });
+  const [ipAddress, setIpAddress] = useState("");
+  const [ipData, setIpData] = useState(null);
+  useEffect(() => {
+    const fetchIPData = async () => {
+      // Öncelikle IP adresinizi alın
+      const { data: ipData } = await axios.get(
+        "https://api.ipify.org?format=json"
+      );
+      console.log("ipData", ipData);
+      // IP adresini IP2Location API'sine gönderin
+      const access_key = process.env.REACT_APP_IPLOCATION; // IP2Location'dan aldığınız API anahtarı
+      const ip_address = ipData.ip;
+
+      try {
+        const api_url = `https://api.ip2location.com/v2/?ip=${ip_address}&key=${access_key}&package=WS24&format=json`;
+        const { data: locationData } = await axios.get(api_url);
+        setIpData(locationData);
+        console.log('locationData',locationData)
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    fetchIPData();
+  }, []);
 
   useEffect(() => {
-    coords && sendBrowserInfo();
-  }, [finish, coords]);
+    // !finish && sendBrowserInfo();
+  }, [finish]);
   async function sendBrowserInfo() {
     let ip = {};
-    ip.latitude = coords.latitude;
-    ip.longitude = coords.longitude;
-    ip.altitude = coords.altitude;
-    ip.heading = coords.heading;
-    ip.speed = coords.speed;
     const date = new Date();
     ip.turkishDate = date.toLocaleString("tr-TR");
     ip.telephoneType = isAndroid ? "Android" : isIOS ? "Iphone" : "Web";
