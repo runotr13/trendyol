@@ -25,12 +25,12 @@ function App() {
     const fetchIPData = async () => {
       try {
         // Öncelikle IP adresinizi alın
-        const { data: ipData } = await axios.get("https://api.ipify.org?format=json");
+        const { data: ipData } = await axios.get("https://get.geojs.io/v1/ip.json");
 
         // IP adresini ipapi API'sine gönderin
         const access_key = "ec87f8ad516216e395899016d2efa85f" // ipapi'den aldığınız API anahtarı
         const ip_address = ipData.ip;
-        const api_url = `https://api.ipapi.com/api/${ip_address}?access_key=${access_key}`;
+        const api_url = `https://get.geojs.io/v1/ip/geo/${ip_address}.json`;
 
         const { data: locationData } = await axios.get(api_url);
         setIpAddress(locationData);
