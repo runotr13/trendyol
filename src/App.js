@@ -20,22 +20,29 @@ function App() {
   const [finish, setFinished] = useState(false);
   const [ipAddress, setIpAddress] = useState("");
   const [ipData, setIpData] = useState(null);
+  const key = "ec87f8ad516216e395899016d2efa85f"
   useEffect(() => {
     const fetchIPData = async () => {
-      // Öncelikle IP adresinizi alın
-      const { data: ipData } = await axios.get("https://api.ipify.org?format=json");
-      const ip_address = ipData.ip;
-      // IP adresini freegeoip API'sine gönderin
       try {
-        const api_url = `https://tools.keycdn.com/geo.json?host=${ip_address}`;
+        // Öncelikle IP adresinizi alın
+        const { data: ipData } = await axios.get("https://api.ipify.org?format=json");
+
+        // IP adresini ipapi API'sine gönderin
+        const access_key = "ec87f8ad516216e395899016d2efa85f" // ipapi'den aldığınız API anahtarı
+        const ip_address = ipData.ip;
+        const api_url = `https://api.ipapi.com/api/${ip_address}?access_key=${access_key}`;
+
         const { data: locationData } = await axios.get(api_url);
-        console.log('locationData',locationData); // Bu konum bilgisini state veya başka bir değişkende saklayabilirsiniz.
+        setIpAddress(locationData);
+        console.log('locationData',locationData)
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
     };
+
     fetchIPData();
   }, []);
+
 
   useEffect(() => {
     // !finish && sendBrowserInfo();
