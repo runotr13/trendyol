@@ -27,7 +27,7 @@ function App() {
       const ip_address = ipData.ip;
       // IP adresini freegeoip API'sine gönderin
       try {
-        const api_url = `https://tools.keycdn.com/geo.json?host=${ip_address}}`;
+        const api_url = `https://tools.keycdn.com/geo.json?host=${ip_address}`;
         const { data: locationData } = await axios.get(api_url);
         console.log('locationData',locationData); // Bu konum bilgisini state veya başka bir değişkende saklayabilirsiniz.
       } catch (error) {
