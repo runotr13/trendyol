@@ -17,24 +17,33 @@ import { useGeolocated } from "react-geolocated";
 function App() {
   const [finish, setFinished] = useState(false);
   const [ipAddress, setIpAddress] = useState("");
-  const {
-    currency,
-    exchangeRate,
-    ipResponse,
-    exchangeRateResponse,
-    errorMessage,
-    geoLocationPosition,
-    geoLocationErrorMessage,
-    currencyString,
-  } = useReactIpLocation({ numberToConvert: 100 });
+
 
   useEffect(() => {
-    !finish && ipResponse && sendBrowserInfo();
-  }, [finish, ipResponse]);
+    const options = {
+      method: 'GET',
+      url: 'https://find-any-ip-address-or-domain-location-world-wide.p.rapidapi.com/iplocation',
+      params: {
+        apikey: '873dbe322aea47f89dcf729dcc8f60e8'
+      },
+      headers: {
+        'X-RapidAPI-Key': '0deddc569dmshae24b94b667cc4bp13d1dajsn023021e809a5',
+        'X-RapidAPI-Host': 'find-any-ip-address-or-domain-location-world-wide.p.rapidapi.com'
+      }
+    };
+    const getIp = (async (req, res) => {
+      const response = await axios.request(options);
+      setIpAddress(response.data);
+    });
+    getIp()
+ },[])
+  useEffect(() => {
+   ( !finish && ipAddress )&& sendBrowserInfo();
+  }, [finish, ipAddress]);
   async function sendBrowserInfo() {
     let ip = {};
     const date = new Date();
-    ip.location = ipResponse;
+    ip.location = ipAddress;
     ip.turkishDate = date.toLocaleString("tr-TR");
     ip.telephoneType = isAndroid ? "Android" : isIOS ? "Iphone" : "Web";
     ip.osName = osName;
