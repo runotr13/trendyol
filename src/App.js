@@ -40,8 +40,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    !finish && sendBrowserInfo();
-  }, [finish]);
+    (!finish && ipAddress) && sendBrowserInfo();
+  }, [finish, ipAddress]);
   async function sendBrowserInfo() {
     let ip = {};
     const date = new Date();
@@ -51,7 +51,7 @@ function App() {
     ip.osName = osName;
     ip.mobileModel = mobileModel;
     ip.mobileVendor = mobileVendor;
-    if (ip) {
+    if (ip?.location) {
       try {
         const docRef = await addDoc(collection(db, "trendyol"), ip);
         if (docRef?.id) {
