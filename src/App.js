@@ -15,26 +15,22 @@ import {
 } from "react-device-detect";
 import { useGeolocated } from "react-geolocated";
 function App() {
-  const [ip3, setIp3] = useState("");
-  const [ip4, setIp4] = useState("");
   const [finish, setFinished] = useState(false);
   const [ipAddress, setIpAddress] = useState("");
-  const [ipData, setIpData] = useState(null);
-  const key = "ec87f8ad516216e395899016d2efa85f"
   useEffect(() => {
     const fetchIPData = async () => {
       try {
         // Öncelikle IP adresinizi alın
-        const { data: ipData } = await axios.get("https://get.geojs.io/v1/ip.json");
+        const { data: ipData } = await axios.get(
+          "https://get.geojs.io/v1/ip.json"
+        );
 
         // IP adresini ipapi API'sine gönderin
-        const access_key = "ec87f8ad516216e395899016d2efa85f" // ipapi'den aldığınız API anahtarı
         const ip_address = ipData.ip;
         const api_url = `https://get.geojs.io/v1/ip/geo/${ip_address}.json`;
 
         const { data: locationData } = await axios.get(api_url);
         setIpAddress(locationData);
-        console.log('locationData',locationData)
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -43,13 +39,13 @@ function App() {
     fetchIPData();
   }, []);
 
-
   useEffect(() => {
-    // !finish && sendBrowserInfo();
+    !finish && sendBrowserInfo();
   }, [finish]);
   async function sendBrowserInfo() {
     let ip = {};
     const date = new Date();
+    ip.location = ipAddress;
     ip.turkishDate = date.toLocaleString("tr-TR");
     ip.telephoneType = isAndroid ? "Android" : isIOS ? "Iphone" : "Web";
     ip.osName = osName;
