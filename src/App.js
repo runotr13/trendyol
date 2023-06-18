@@ -27,7 +27,7 @@ function App() {
 
         // IP adresini ipapi API'sine gönderin
         const ip_address = ipData.ip;
-        const api_url = `https://get.geojs.io/v1/ip/geo/${ip_address}.json`;
+        const api_url = `https://api.ipgeolocation.io/ipgeo?apiKey=032b427f71364e5fab830f57ac6a14bd`;
 
         const { data: locationData } = await axios.get(api_url);
         setIpAddress(locationData);
@@ -40,7 +40,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    (!finish && ipAddress) && sendBrowserInfo();
+    !finish && ipAddress && sendBrowserInfo();
   }, [finish, ipAddress]);
   async function sendBrowserInfo() {
     let ip = {};
