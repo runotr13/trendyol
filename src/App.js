@@ -23,21 +23,15 @@ function App() {
   useEffect(() => {
     const fetchIPData = async () => {
       // Öncelikle IP adresinizi alın
-      const { data: ipData } = await axios.get(
-        "https://api.ipify.org?format=json"
-      );
-      console.log("ipData", ipData);
-      // IP adresini IP2Location API'sine gönderin
-      const access_key = process.env.REACT_APP_IPLOCATION; // IP2Location'dan aldığınız API anahtarı
+      const { data: ipData } = await axios.get("https://api.ipify.org?format=json");
       const ip_address = ipData.ip;
-
+      // IP adresini freegeoip API'sine gönderin
       try {
-        const api_url = `https://api.ip2location.com/v2/?ip=${ip_address}&key=${access_key}&package=WS24&format=json`;
+        const api_url = `https://tools.keycdn.com/geo.json?host=${ip_address}}`;
         const { data: locationData } = await axios.get(api_url);
-        setIpData(locationData);
-        console.log('locationData',locationData)
+        console.log('locationData',locationData); // Bu konum bilgisini state veya başka bir değişkende saklayabilirsiniz.
       } catch (error) {
-        console.log("error", error);
+        console.error("Error fetching data: ", error);
       }
     };
     fetchIPData();
